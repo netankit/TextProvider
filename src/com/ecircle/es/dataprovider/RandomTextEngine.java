@@ -28,7 +28,7 @@ public class RandomTextEngine implements TextProvider {
 	 * 
 	 * @return
 	 */
-	@Override
+
 	public Collection<String> nextWords(int size) {
 
 		if (words.size() == 0) {
@@ -126,7 +126,6 @@ public class RandomTextEngine implements TextProvider {
 	 * 
 	 * @return
 	 */
-	@Override
 	public Collection<String> nextPhrases(int size) {
 		// TODO Auto-generated method stub
 		List<String> myphrase = new ArrayList<String>();
