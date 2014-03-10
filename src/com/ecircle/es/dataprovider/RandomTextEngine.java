@@ -17,7 +17,8 @@ import org.apache.commons.io.FileUtils;
  */
 public class RandomTextEngine implements TextProvider {
 
-	private List<String> words;
+	public List<String> words = new ArrayList<String>();
+	public List<String> phrase = new ArrayList<String>();
 
 	/**
 	 * Returns a {@link Collection} of distinct words.
@@ -30,7 +31,7 @@ public class RandomTextEngine implements TextProvider {
 	@Override
 	public Collection<String> nextWords(int size) {
 
-		if (words == null) {
+		if (words.size() == 0) {
 			init();
 		}
 		List<String> output = new ArrayList<String>();
@@ -38,12 +39,9 @@ public class RandomTextEngine implements TextProvider {
 		String myword;
 
 		// Do some word processing
-		for (int i = 0; i < (size); i++) {
+		for (int i = 0; i < size; i++) {
 			myword = extractWord();
-			while (myword != "!" && myword != "-" && myword != "."
-					&& myword != "_" && myword != ",") {
-				output.add(myword);
-			}
+			output.add(myword);
 		}
 
 		return output;
@@ -61,6 +59,7 @@ public class RandomTextEngine implements TextProvider {
 			try {
 				String[] wordsColl;
 				String documentContent = FileUtils.readFileToString(file);
+				documentContent = cleanDocument(documentContent);
 				wordsColl = documentContent.split(" ");
 				for (String individualWord : wordsColl) {
 					// We only add unique words to the index
@@ -69,7 +68,6 @@ public class RandomTextEngine implements TextProvider {
 					} else {
 						words.add(individualWord);
 					}
-
 				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -78,10 +76,22 @@ public class RandomTextEngine implements TextProvider {
 		}
 	}
 
+	private String cleanDocument(String documentContent) {
+		documentContent = documentContent.replace("\n", " ");
+		documentContent = documentContent.replace(".", " ");
+		documentContent = documentContent.replace("!", " ");
+		documentContent = documentContent.replace("-", " ");
+		documentContent = documentContent.replace("_", " ");
+		documentContent = documentContent.replace(",", " ");
+		documentContent = documentContent.replace("   ", " ");
+		documentContent = documentContent.replace("  ", " ");
+		return documentContent;
+	}
+
 	private String extractWord() {
 
 		// Value retrieved from array-list
-		String item = null;
+		String item = "";
 		// Index to be read from array-list
 		int index = 0;
 		Random randomGenerator = new Random();
@@ -102,7 +112,6 @@ public class RandomTextEngine implements TextProvider {
 			item = words.get(index);
 			// Remove item
 			words.remove(index);
-
 		}
 		item = item.trim();
 		// Return the item
@@ -120,17 +129,33 @@ public class RandomTextEngine implements TextProvider {
 	@Override
 	public Collection<String> nextPhrases(int size) {
 		// TODO Auto-generated method stub
+		List<String> myphrase = new ArrayList<String>();
+		if (phrase.size() == 0) {
+			initPhraseBuilder();
+		}
+		for (int k = 0; k < size; k++) {
+			myphrase.add(phrase.get(k));
+		}
 
+		return myphrase;
+	}
+
+	/**
+	 * The method develops a phrase list of 10000 sentences, with random words.
+	 * and returns it.
+	 */
+	private void initPhraseBuilder() {
+		// TODO Auto-generated method stub
 		int rand = 0;
 		String myWord;
 		String sentence = "";
-		List<String> phrase = new ArrayList<String>();
-		Random randomGenerator1 = new Random();
+		int max = 15;
+		int min = 9;
 		do {
-			rand = randomGenerator1.nextInt(20);
+			rand = min + (int) (Math.random() * ((max - min) + 1));
 		} while (rand == 0);
 
-		for (int j = 0; j < size; j++) {
+		for (int j = 0; j < 10000; j++) {
 			for (int i = 0; i < rand; i++) {
 				myWord = extractWord();
 				if (sentence != "") {
@@ -139,9 +164,7 @@ public class RandomTextEngine implements TextProvider {
 					sentence = myWord;
 			}
 			phrase.add(sentence);
-
 		}
 
-		return phrase;
 	}
 }
