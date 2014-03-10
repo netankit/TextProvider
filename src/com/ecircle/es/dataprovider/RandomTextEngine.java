@@ -145,8 +145,8 @@ public class RandomTextEngine implements TextProvider {
 	}
 
 	/**
-	 * The method develops a phrase list of 1000 sentences, with random words.
-	 * and returns it.
+	 * The method develops a phrase list of 1000000 sentences, with random
+	 * words. and returns it.
 	 */
 	private void initPhraseBuilder() {
 		// TODO Auto-generated method stub
