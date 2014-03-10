@@ -111,7 +111,7 @@ public class RandomTextEngine implements TextProvider {
 			// Get the indexed item
 			item = words.get(index);
 			// Remove item
-			words.remove(index);
+			// words.remove(index);
 		}
 		item = item.trim();
 		// Return the item
@@ -130,32 +130,34 @@ public class RandomTextEngine implements TextProvider {
 	public Collection<String> nextPhrases(int size) {
 		// TODO Auto-generated method stub
 		List<String> myphrase = new ArrayList<String>();
-		if (phrase.size() == 0) {
-			initPhraseBuilder();
-		}
+
+		initPhraseBuilder();
+		Random randomGenerator = new Random();
+
 		for (int k = 0; k < size; k++) {
-			myphrase.add(phrase.get(k));
+			int randomIndex = randomGenerator.nextInt(phrase.size());
+			myphrase.add(phrase.get(randomIndex));
 		}
 
 		return myphrase;
 	}
 
 	/**
-	 * The method develops a phrase list of 10000 sentences, with random words.
+	 * The method develops a phrase list of 1000 sentences, with random words.
 	 * and returns it.
 	 */
 	private void initPhraseBuilder() {
 		// TODO Auto-generated method stub
 		int rand = 0;
 		String myWord;
-		String sentence = "";
 		int max = 15;
 		int min = 9;
 		do {
 			rand = min + (int) (Math.random() * ((max - min) + 1));
 		} while (rand == 0);
 
-		for (int j = 0; j < 10000; j++) {
+		for (int j = 0; j < 1000; j++) {
+			String sentence = "";
 			for (int i = 0; i < rand; i++) {
 				myWord = extractWord();
 				if (sentence != "") {
