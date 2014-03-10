@@ -131,7 +131,9 @@ public class RandomTextEngine implements TextProvider {
 		// TODO Auto-generated method stub
 		List<String> myphrase = new ArrayList<String>();
 
-		initPhraseBuilder();
+		if (phrase.isEmpty()) {
+			initPhraseBuilder();
+		}
 		Random randomGenerator = new Random();
 
 		for (int k = 0; k < size; k++) {
@@ -150,13 +152,13 @@ public class RandomTextEngine implements TextProvider {
 		// TODO Auto-generated method stub
 		int rand = 0;
 		String myWord;
-		int max = 15;
-		int min = 9;
+		int max = 12;
+		int min = 6;
 		do {
 			rand = min + (int) (Math.random() * ((max - min) + 1));
 		} while (rand == 0);
 
-		for (int j = 0; j < 1000; j++) {
+		for (long j = 0; j < 1000000; j++) {
 			String sentence = "";
 			for (int i = 0; i < rand; i++) {
 				myWord = extractWord();

@@ -19,6 +19,7 @@ public class clientUI {
 
 		}
 		System.out.println(".....End of Words output.....");
+		System.out.println(".....Phrase Output.....");
 
 		for (int i = 0; i < 3; i++) {
 			System.out.println("Phrase:" + i);
